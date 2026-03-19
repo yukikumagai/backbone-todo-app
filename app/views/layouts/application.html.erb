@@ -1,44 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="utf-8" />
   <title>Todos</title>
-  <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="/stylesheets/todos.css" />
-  <%= javascript_include_tag [
-    'underscore.js',
-    'jquery.js',
-    'backbone.js',
-    'backpusher.js',
-    'pusher.js',
-    'application.js'
-  ] %>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="/stylesheets/todos.css" />
+  <%= javascript_include_tag %w[underscore.js jquery.js backbone.js backpusher.js pusher.js application.js] %>
   <%= csrf_meta_tag %>
-  <link rel="shortcut icon" href="favicon.png" />
-  <link rel="apple-touch-icon-precomposed" href="favicon.png" />
+  <link rel="shortcut icon" href="/favicon.png" />
+  <link rel="apple-touch-icon-precomposed" href="/favicon.png" />
 </head>
 <body>
-  <div id="todoapp">
+  <main id="todoapp" role="main">
     <%= yield %>
-  </div>
-  <div id="instructions">
-    <p>
-      Read the <a href="#" title="Article on our blog about how we did this and how you can do the same">Blog Post</a> or <a href="https://github.com/pusher/backbone-todo-app" title="Get the source code to this application">Get The Code</a>.
-    </p>
-  </div>
-  <div id="credits">
-    <p>
-      Created by
-      <br />
-      <a href="http://jgn.me/" title="Visit Jérôme Gravel-Niquet's Website">Jérôme Gravel-Niquet</a>
-    </p>
-    <p>
-      Modified for Realtime by
-      <br />
-      <a href="http://pusher.com" title="Pusher: A simple way to add realtime push to your web applications">the <em>Pusherinos</em></a>
-    </p>
-    <p class="wide">
-      Icons by <a href="http://somerandomdude.com/projects/iconic/" title="@Somerandomdude did the icons we used in the interface to this demo">@somerandomdude</a>.
-    </p>
-  </div>
+  </main>
+
+  <footer>
+    <nav id="instructions" aria-label="Project links">
+      <p>
+        Read the <a href="#" title="Blog post about how this was built">Blog Post</a>
+        or <a href="https://github.com/yukikumagai/backbone-todo-app" title="Source code on GitHub">Get The Code</a>.
+      </p>
+    </nav>
+
+    <section id="credits">
+      <p>
+        Created by<br />
+        <a href="http://jgn.me/" title="Jérôme Gravel-Niquet's website">Jérôme Gravel-Niquet</a>
+      </p>
+      <p>
+        Modified for Realtime by<br />
+        <a href="https://pusher.com" title="Pusher: real-time push for web apps">the <em>Pusherinos</em></a>
+      </p>
+      <p class="wide">
+        Icons by <a href="http://somerandomdude.com/projects/iconic/" title="Iconic icon set by @somerandomdude">@somerandomdude</a>.
+      </p>
+    </section>
+  </footer>
 </body>
 </html>

@@ -1,9 +1,9 @@
 Todos::Application.routes.draw do
-  root :to => "lists#index"
-  get ":token" => "lists#show", :as => :show_list
-  # delete ":token/destroy" => "list#destroy", :as => :destroy_list
+  root to: 'lists#index'
 
-  scope ":token", :as => "list" do
-    resources :items, :except => [:new, :edit]
+  get ':token', to: 'lists#show', as: :show_list
+
+  scope ':token', as: 'list' do
+    resources :items, only: %i[index show create update destroy]
   end
 end
