@@ -1,17 +1,57 @@
-## Backbone-Todo-App
+# backbone-todo-app
 
-This application shows how one can combine the usage of both [backbone.js](http://documentcloud.github.com/backbone/) on the client-side and [Ruby on Rails (3.0.7)](http://rubyonrails.org/) on the server-side with [Pusher](http://pusher.com) to create an rich interactive and collaborative application such as a todo-list manager.
+A real-time collaborative todo list app built with **Backbone.js** on the client and **Ruby on Rails (3.0.7)** on the server, using **Pusher** to broadcast changes to connected clients.
 
-## Code
+## Features
 
-The bulk of the application's front-end logic is heavily based off the [backbone.js todo-list example](http://documentcloud.github.com/backbone/docs/todos.html). We've written a small library that binds Pusher and Backbone together, the code to this can be found in [public/javascripts/backpusher.js](https://github.com/pusher/backbone-todo-app/blob/master/public/javascripts/backpusher.js). The usage of it can be seen in [public/javascripts/application.js](https://github.com/pusher/backbone-todo-app/blob/master/public/javascripts/application.js).
+- Create and manage todo items
+- Real-time updates across clients via Pusher
+- Backbone.js models/collections/views on the frontend
+- Rails backend with database persistence
 
-## Running Locally
+## Tech stack
 
-To get this application running locally, you should be able to simply clone this repository and run the following:
+- Frontend: Backbone.js + jQuery + Underscore
+- Backend: Ruby on Rails 3.0.7
+- Real-time: Pusher
+- Database: SQLite (default for local dev)
 
-    bundle install
-    rake db:migrate
-    rails s
-    open http://localhost:3000/
+## Getting started
 
+### Prerequisites
+
+- Ruby (compatible with Rails 3.0.7)
+- Bundler
+- SQLite
+
+### Setup
+
+1. Install gems:
+
+   - `bundle install`
+
+2. Set up the database:
+
+   - `rake db:migrate`
+
+3. Start the server:
+
+   - `rails s`
+
+4. Open the app:
+
+   - http://localhost:3000/
+
+## Code tour
+
+- Pusher + Backbone integration: `public/javascripts/backpusher.js`
+- App wiring and usage: `public/javascripts/application.js`
+- Rails config entrypoint: `config.ru`
+
+## Notes
+
+This repo is based heavily on the Backbone.js todos example.
+
+## License
+
+See the repository license (or add one if missing).
