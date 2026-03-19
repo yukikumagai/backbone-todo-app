@@ -1,17 +1,85 @@
-## Backbone-Todo-App
+# Backbone Todo App
 
-This application shows how one can combine the usage of both [backbone.js](http://documentcloud.github.com/backbone/) on the client-side and [Ruby on Rails (3.0.7)](http://rubyonrails.org/) on the server-side with [Pusher](http://pusher.com) to create an rich interactive and collaborative application such as a todo-list manager.
+A real-time collaborative to-do list built with **Ruby on Rails 3**, **Backbone.js**, and **Pusher**.
 
-## Code
+## Features
 
-The bulk of the application's front-end logic is heavily based off the [backbone.js todo-list example](http://documentcloud.github.com/backbone/docs/todos.html). We've written a small library that binds Pusher and Backbone together, the code to this can be found in [public/javascripts/backpusher.js](https://github.com/pusher/backbone-todo-app/blob/master/public/javascripts/backpusher.js). The usage of it can be seen in [public/javascripts/application.js](https://github.com/pusher/backbone-todo-app/blob/master/public/javascripts/application.js).
+- Create, edit, complete, and delete to-do items.
+- Share any list via its unique URL.
+- Changes sync to all connected clients in real time via Pusher.
 
-## Running Locally
+---
 
-To get this application running locally, you should be able to simply clone this repository and run the following:
+## Getting Started
 
-    bundle install
-    rake db:migrate
-    rails s
-    open http://localhost:3000/
+### Prerequisites
 
+- Ruby ≥ 1.9.2
+- Bundler
+- A [Pusher](https://pusher.com) account (free tier is sufficient)
+
+### Setup
+
+```bash
+git clone https://github.com/yukikumagai/backbone-todo-app.git
+cd backbone-todo-app
+
+bundle install
+
+cp .env.example .env
+# Edit .env and fill in your Pusher credentials and a SECRET_TOKEN
+
+bundle exec rake db:create db:migrate
+bundle exec rails server
+```
+
+Open `http://localhost:3000` in your browser.
+
+---
+
+## Environment Variables
+
+| Variable         | Description                                     |
+|------------------|-------------------------------------------------|
+| `SECRET_TOKEN`   | Rails cookie-signing secret (≥ 30 characters)  |
+| `PUSHER_APP_ID`  | Pusher application ID                           |
+| `PUSHER_KEY`     | Pusher publishable key                          |
+| `PUSHER_SECRET`  | Pusher secret key                               |
+
+Never commit real secrets to version control. Use `.env` (git-ignored) or your platform's config vars (e.g. Heroku).
+
+---
+
+## Running Tests
+
+```bash
+bundle exec rake test
+```
+
+---
+
+## Architecture
+
+```
+app/
+  controllers/
+    lists_controller.rb   # Creates lists; redirects unknown tokens to root
+    items_controller.rb   # JSON CRUD for items; fires Pusher events
+  models/
+    list.rb               # Generates a unique URL token; owns items
+    item.rb               # Validates presence of shortdesc
+  views/
+    layouts/application.html.erb
+    lists/show.html.erb   # Backbone templates + minimal boot data
+
+public/javascripts/
+  application.js   # Backbone app (models, views, realtime, bootstrap)
+```
+
+---
+
+## Credits
+
+- Original TodoMVC implementation by [Jérôme Gravel-Niquet](http://jgn.me/)
+- Real-time layer by [Pusher](https://pusher.com)
+- Icons by [@somerandomdude](http://somerandomdude.com/projects/iconic/)

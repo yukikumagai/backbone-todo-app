@@ -1,16 +1,12 @@
 class Item < ActiveRecord::Base
-  # ---
-  # Attributes
-  #  - shortdesc
-  #  - longdesc
-  #  - isdone
-  #  - timestamps
-
+  # Associations
   belongs_to :list
 
-  def as_json(options=nil)
-    super({
-      :except => [:longdesc, :list_id]
-    }.merge(options))
+  # Validations
+  validates :shortdesc, presence: true
+  validates :list,      presence: true
+
+  def as_json(options = nil)
+    super({ except: %i[longdesc list_id] }.merge(options || {}))
   end
 end

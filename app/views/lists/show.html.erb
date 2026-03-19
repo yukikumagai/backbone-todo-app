@@ -1,39 +1,58 @@
-<script type="text/javascript">
-  if (!window.app) var app = window.app = {};
-  
-  window.app.list_path = "<%= show_list_path(:token => @list.token) %>";
-  window.app.list_channel = "<%= @list.channel_name %>"
+<%# Expose only the minimal data the JS layer needs — no inline app logic. %>
+<script>
+  window.app = window.app || {};
+  window.app.list_path    = "<%= show_list_path(token: @list.token) %>";
+  window.app.list_channel = "<%= @list.channel_name %>";
 </script>
-<div class="title">
+
+<header class="title">
   <h1>To-do&apos;s</h1>
   <p>
-    You can collaborate in realtime on this to-do list by sharing this url:
+    Collaborate in real time by sharing this URL:
     <br />
-    <input type="text" readonly="readonly" value="<%= show_list_path(:token => @list.token, :only_path => false) %>"/>
+    <input type="text"
+           readonly="readonly"
+           aria-label="Shareable list URL"
+           value="<%= show_list_path(token: @list.token, only_path: false) %>" />
   </p>
-</div>
-<div class="content">
-  <div id="create-todo">
-    <input id="new-todo" placeholder="What needs to be done?" type="text" />
-    <span class="ui-tooltip-top">Press Enter to save this task</span>
-  </div>
-  <div id="todos">
-    <ul id="todo-list"></ul>
-  </div>
-  <div id="todo-stats"></div>
-</div>
+</header>
 
+<section class="content">
+  <div id="create-todo">
+    <label for="new-todo" class="sr-only">What needs to be done?</label>
+    <input id="new-todo"
+           type="text"
+           placeholder="What needs to be done?"
+           autocomplete="off" />
+    <span class="ui-tooltip-top" role="tooltip">Press Enter to save this task</span>
+  </div>
+
+  <div id="todos">
+    <ul id="todo-list" aria-label="Todo items" aria-live="polite"></ul>
+  </div>
+
+  <div id="todo-stats" aria-live="polite"></div>
+</section>
+
+
+<%# ------------------------------------------------------------------ %>
+<%# Underscore templates – rendered client-side by Backbone views.     %>
+<%# ------------------------------------------------------------------ %>
 
 <script type="text/template" id="item-template">
   <div id="todo-item-<%%= id %>" class="todo <%%= isdone ? 'done' : '' %>">
     <div class="display">
-      <input class="check" type="checkbox" name="todo-item-<%%= id %>-check" id="todo-item-<%%= id %>-check" <%%= isdone ? 'checked="checked"' : '' %> />
+      <input class="check"
+             type="checkbox"
+             id="todo-item-<%%= id %>-check"
+             name="todo-item-<%%= id %>-check"
+             <%%= isdone ? 'checked="checked"' : '' %> />
       <label class="todo-content" for="todo-item-<%%= id %>-check"></label>
-      <span class="todo-edit"></span>
-      <span class="todo-destroy"></span>
+      <span class="todo-edit"   aria-label="Edit item"></span>
+      <span class="todo-destroy" aria-label="Delete item"></span>
     </div>
     <div class="edit">
-      <input class="todo-input" type="text" value="" />
+      <input class="todo-input" type="text" value="" aria-label="Edit todo text" />
     </div>
   </div>
 </script>
@@ -41,12 +60,14 @@
 <script type="text/template" id="stats-template">
   <span class="todo-count">
     <span class="number"><%%= remaining %></span>
-    <span class="word"><%%= remaining == 1 ? 'item' : 'items' %></span> left.
+    <span class="word"><%%= remaining === 1 ? 'item' : 'items' %></span> left.
   </span>
+  <%% if (done > 0) { %>
   <span class="todo-clear">
-    <a href="#">
+    <a href="#" role="button">
       Clear <span class="number-done"><%%= done %></span>
-      completed <span class="word-done"><%%= done == 1 ? 'item' : 'items' %></span>
+      completed <span class="word-done"><%%= done === 1 ? 'item' : 'items' %></span>
     </a>
   </span>
+  <%% } %>
 </script>
