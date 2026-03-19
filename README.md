@@ -37,24 +37,25 @@ A real-time, collaborative todo application built with **Backbone.js** on the fr
     bundle install
     ```
 
-3.  **Configure Pusher**:
-    Update `config/initializers/pusher.rb` with your Pusher credentials:
-    ```ruby
-    Pusher.app_id = 'your-app-id'
-    Pusher.key = 'your-key'
-    Pusher.secret = 'your-secret'
+3.  **Configure Environment**:
+    Copy `.env.example` to `.env` (or update directly in `config/initializers/pusher.rb` for now):
+    ```bash
+    cp .env.example .env
     ```
-    Also, update the Pusher key in `public/javascripts/application.js`:
+    Update `config/initializers/pusher.rb` with your credentials. *Note: Using `dotenv-rails` or similar is recommended for modern Rails applications.*
+
+4.  **Update Pusher Key in JS**:
+    Update the Pusher key in `public/javascripts/application.js`:
     ```javascript
     var pusher = new Pusher('your-key');
     ```
 
-4.  **Setup Database**:
+5.  **Setup Database**:
     ```bash
     rake db:migrate
     ```
 
-5.  **Run the Server**:
+6.  **Run the Server**:
     ```bash
     rails s
     ```
